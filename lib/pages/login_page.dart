@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:foodry_app/components/my_button.dart';
 import 'package:foodry_app/components/my_textfield.dart';
+import 'package:foodry_app/pages/home_Page.dart';
 
 class LoginPage extends StatefulWidget {
-  final void Function ()? onTap;
+  final void Function()? onTap;
 
   const LoginPage({super.key, required this.onTap});
 
@@ -12,8 +13,22 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+  //Controles de edicion de texto
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
+
+  //metodo de login
+  void login() {
+    // autenticacion
+
+    // navegacion a la home page
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => const HomePage()
+        ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -58,24 +73,32 @@ class _LoginPageState extends State<LoginPage> {
             const SizedBox(height: 10),
 
             //button
-            MyButton(text: "Sing In ", onTap: () {}),
+            MyButton(text: "Sing In ", onTap: login),
             const SizedBox(height: 25),
 
             //register
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text("Not a member? ",
-                style: TextStyle(color: Theme.of(context).colorScheme.inversePrimary),
-                ),
-                const SizedBox( width: 4),
-                GestureDetector(
-                  onTap: widget.onTap ,
-                  child: Text("Register now",
-                  style: TextStyle(color: Theme.of(context).colorScheme.inversePrimary, fontWeight: FontWeight.bold),
+                Text(
+                  "Not a member? ",
+                  style: TextStyle(
+                    color: Theme.of(context).colorScheme.inversePrimary,
                   ),
                 ),
-              ]),
+                const SizedBox(width: 4),
+                GestureDetector(
+                  onTap: widget.onTap,
+                  child: Text(
+                    "Register now",
+                    style: TextStyle(
+                      color: Theme.of(context).colorScheme.inversePrimary,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+              ],
+            ),
           ],
         ),
       ),
