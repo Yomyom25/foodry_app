@@ -1,13 +1,15 @@
+import 'package:flutter/material.dart';
+
 import 'food.dart';
 
-class Restaurant {
+class Restaurant extends ChangeNotifier{
   // Lista del menú
-  final List<Food> menu = [
+  final List<Food> _menu = [
     // Burgers
     Food(
       name: "Classic Burger",
-      description: "A juicy beef patty with melted cheddar, lettuce, tomato, and a hint of onion and pickle",
-      imagePath: "lib/images/burgers/cheese_burger.png",
+      description: "A juicy beef patty with melted cheddar, lettuce, tomato, and a hint of onion and pickle.",
+      imagePath: "lib/images/burguers/burguer_clasic.jpg",
       price: 0.99,
       category: FoodCategory.burgers,
       availableAddons: [
@@ -17,20 +19,20 @@ class Restaurant {
       ],
     ),
     Food(
-  name: "BBQ Bacon Burger",
-  description: "Beef patty smothered in BBQ sauce, crispy bacon, cheddar cheese, and crunchy onion rings.",
-  imagePath: "lib/images/burgers/bbq_bacon_burger.png",
-  price: 1.49,
-  category: FoodCategory.burgers,
-  availableAddons: [
-    Addon(name: "Double patty", price: 2.49),
-    Addon(name: "Extra BBQ sauce", price: 0.49),
-  ],
-),
+      name: "BBQ Bacon Burger",
+      description: "Beef patty smothered in BBQ sauce, crispy bacon, cheddar cheese, and crunchy onion rings.",
+      imagePath: "lib/images/burguers/burguer_clasic.jpg",
+      price: 1.49,
+      category: FoodCategory.burgers,
+      availableAddons: [
+        Addon(name: "Double patty", price: 2.49),
+        Addon(name: "Extra BBQ sauce", price: 0.49),
+      ],
+    ),
     Food(
       name: "Mushroom Swiss Burger",
       description: "Savory mushrooms sautéed in garlic butter, Swiss cheese, and a perfectly grilled beef patty.",
-      imagePath: "lib/images/burgers/mushroom_swiss_burger.png",
+      imagePath: "lib/images/burguers/burguer_clasic.jpg",
       price: 1.99,
       category: FoodCategory.burgers,
       availableAddons: [
@@ -39,23 +41,22 @@ class Restaurant {
       ],
     ),
     Food(
-  name: "Spicy Jalapeño Burger",
-  description: "Zesty jalapeños, spicy pepper jack cheese, and a chipotle mayo sauce on a beef patty.",
-  imagePath: "lib/images/burgers/spicy_jalapeno_burger.png",
-  price: 1.79,
-  category: FoodCategory.burgers,
-  availableAddons: [
-    Addon(name: "Extra jalapeños", price: 0.50),
-    Addon(name: "Chipotle mayo", price: 0.75),
-    Addon(name: "Grilled onions", price: 0.99),
-  ],
-),
-
-    // Oriental
+      name: "Spicy Jalapeño Burger",
+      description: "Zesty jalapeños, spicy pepper jack cheese, and a chipotle mayo sauce on a beef patty.",
+      imagePath: "lib/images/burguers/burguer_clasic.jpg",
+      price: 1.79,
+      category: FoodCategory.burgers,
+      availableAddons: [
+        Addon(name: "Extra jalapeños", price: 0.50),
+        Addon(name: "Chipotle mayo", price: 0.75),
+        Addon(name: "Grilled onions", price: 0.99),
+      ],
+    ),
+     // Oriental
     Food(
       name: "Sushi Roll",
       description: "Fresh salmon, avocado, and cucumber wrapped in sushi rice and seaweed",
-      imagePath: "lib/images/oriental/sushi_roll.png",
+      imagePath: "lib/images/oriental/sushi.jpg",
       price: 8.99,
       category: FoodCategory.oriental,
       availableAddons: [
@@ -66,7 +67,7 @@ class Restaurant {
     Food(
       name: "Pad Thai",
       description: "Stir-fried rice noodles with shrimp, egg, and a tangy tamarind sauce",
-      imagePath: "lib/images/oriental/pad_thai.png",
+      imagePath: "lib/images/oriental/sushi.jpg",
       price: 12.99,
       category: FoodCategory.oriental,
       availableAddons: [
@@ -75,11 +76,11 @@ class Restaurant {
       ],
     ),
 
-    // Sides
+    // Slides
     Food(
       name: "French Fries",
       description: "Crispy golden fries with a sprinkle of salt",
-      imagePath: "lib/images/sides/french_fries.png",
+      imagePath: "lib/images/oriental/sushi.jpg",
       price: 2.99,
       category: FoodCategory.slides,
       availableAddons: [
@@ -90,7 +91,7 @@ class Restaurant {
     Food(
       name: "Onion Rings",
       description: "Crispy, golden-battered onion rings",
-      imagePath: "lib/images/sides/onion_rings.png",
+      imagePath: "lib/images/oriental/sushi.jpg",
       price: 3.49,
       category: FoodCategory.slides,
       availableAddons: [
@@ -103,7 +104,7 @@ class Restaurant {
     Food(
       name: "Classic Cola",
       description: "Refreshing cola served chilled",
-      imagePath: "lib/images/drinks/cola.png",
+      imagePath: "lib/images/oriental/sushi.jpg",
       price: 1.49,
       category: FoodCategory.drinks,
       availableAddons: [
@@ -114,7 +115,7 @@ class Restaurant {
     Food(
       name: "Fresh Lemonade",
       description: "Homemade lemonade with a tangy twist",
-      imagePath: "lib/images/drinks/lemonade.png",
+      imagePath: "lib/images/oriental/sushi.jpg",
       price: 2.49,
       category: FoodCategory.drinks,
       availableAddons: [
@@ -124,18 +125,46 @@ class Restaurant {
     ),
   ];
 
-  // GETTERS
+  // Carrito de compras
+  final List<Food> _cart = [];
 
+  // Getters
   List<Food> get menu => _menu;
+
+  List<Food> get cart => _cart;
+
+  // Funciones
+  void addToCart(Food item) {
+    _cart.add(item);
+  }
+
+  void removeFromCart(Food item) {
+    _cart.remove(item);
+  }
+
+  double getTotalPrice() {
+    return _cart.fold(0, (total, item) => total + item.price);
+  }
+
+  int getCartItemCount() {
+    return _cart.length;
+  }
+
+  void clearCart() {
+    _cart.clear();
+  }
+
+  String generateReceipt() {
+    if (_cart.isEmpty) return "Your cart is empty.";
+
+    StringBuffer receipt = StringBuffer();
+    receipt.writeln("Receipt:");
+    receipt.writeln("-------------");
+    for (var item in _cart) {
+      receipt.writeln("${item.name} - \$${item.price.toStringAsFixed(2)}");
+    }
+    receipt.writeln("-------------");
+    receipt.writeln("Total: \$${getTotalPrice().toStringAsFixed(2)}");
+    return receipt.toString();
+  }
 }
-
-  // FUNCIONES
-  //añadir al carrito
-  //Quitar del carrito
-  //Obtener el precio
-  //numero de items
-  //limpiar carrito
-
-  // AYUDAS
-  //generar recibo
-  

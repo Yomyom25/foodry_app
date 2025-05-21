@@ -1,14 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:foodry_app/auth/login_or_register.dart';
+import 'package:foodry_app/models/restaurant.dart';
 import 'package:foodry_app/themes/theme_provider.dart';
 import 'package:provider/provider.dart';
 
 void main() {
   runApp(
-    ChangeNotifierProvider(
-      create: (context) => ThemeProvider(),
+    MultiProvider(providers: [
+      //tema
+      ChangeNotifierProvider(
+        create: (context) => ThemeProvider()
+        ),
+
+      //restaurant
+      ChangeNotifierProvider(
+        create: (context) => Restaurant()
+        ),
+      ],
       child: const MyApp(),
-    ),
+    )
   );
 }
 
