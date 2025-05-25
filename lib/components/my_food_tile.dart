@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:foodry_app/models/food.dart';
-import 'package:foodry_app/models/food.dart';
 
 class FoodTile extends StatelessWidget {
   final Food food;
