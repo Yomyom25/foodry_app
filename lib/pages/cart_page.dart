@@ -3,6 +3,7 @@ import 'package:foodry_app/components/my_button.dart';
 import 'package:foodry_app/components/my_cart_tile.dart';
 import 'package:foodry_app/models/cart_item.dart';
 import 'package:foodry_app/models/restaurant.dart';
+import 'package:foodry_app/pages/payment_page.dart';
 import 'package:provider/provider.dart';
 
 class CartPage extends StatelessWidget {
@@ -82,7 +83,11 @@ class CartPage extends StatelessWidget {
               //boton para pagar
               MyButton(
                 text: "Go to checkout",
-                onTap: (){}
+                onTap: () => Navigator.push(
+                  context, MaterialPageRoute(
+                    builder: (context) => PaymentPage(),
+                    )
+                  )
                 ),
                 const SizedBox(height: 25,),
             ],
