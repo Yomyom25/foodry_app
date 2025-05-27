@@ -66,7 +66,7 @@ class _FoodPageState extends State<FoodPage> {
 
                       //Descripcion
                       Text(
-                        '\$' + widget.food.price.toString(),
+                        '\$${widget.food.price}',
                         style: TextStyle(
                           fontSize: 16,
                           color: Theme.of(context).colorScheme.primary,

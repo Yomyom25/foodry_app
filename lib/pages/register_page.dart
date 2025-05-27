@@ -10,11 +10,24 @@ class RegisterPage extends StatefulWidget {
   @override
   State<RegisterPage> createState() => _RegisterPageState();
 }
-
 class _RegisterPageState extends State<RegisterPage> {
-  final TextEditingController emailController = TextEditingController();
-  final TextEditingController passwordController = TextEditingController();
-  final TextEditingController confirmPasswordController = TextEditingController();
+  //editores de texto
+  final emailController = TextEditingController();
+  final passwordController = TextEditingController();
+  final confirmPasswordController = TextEditingController();
+
+  //Metodo para registrarse
+  void register() async {
+    //Autenticacion
+
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        backgroundColor: Theme.of(context).colorScheme.surface,
+        title: Text("uwu"),
+      ),
+      );
+  }
 
   @override
   Widget build(BuildContext context) {

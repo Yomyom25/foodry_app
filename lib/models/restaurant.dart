@@ -212,6 +212,7 @@ Food(
     receipt.writeln();
     receipt.writeln("------------");
 
+    // ignore: non_constant_identifier_names
     for (final CartItem in _cart){
       receipt.writeln(
         "${CartItem.quantity} x ${CartItem.food.name} - ${_formatPrice(CartItem.food.price)}");
