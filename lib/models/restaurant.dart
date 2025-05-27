@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:foodry_app/models/cart_item.dart';
@@ -128,10 +130,16 @@ Food(
 
   // Carrito de compras
   final List<CartItem> _cart = [];
+    //direccion del pedido
+  String _deliveryAddress = '99 Hollywood Blv';
 
   // Getters
   List<Food> get menu => _menu;
+
   List<CartItem> get cart => _cart;
+
+  String get deliveryAddress => _deliveryAddress;
+
 
   // Agregar al carrito
   void addToCart(Food food, List<Addon> selectedAddons) {
@@ -197,6 +205,12 @@ Food(
     notifyListeners();
   }
 
+  //actualizar direccion de delivery
+  void updateDeliveryAddress(String newAddress){
+    _deliveryAddress = newAddress;
+    notifyListeners();
+  }
+
   // H E L P E R S
   //generar el recibo
   String displayCartReceipt(){
@@ -225,6 +239,8 @@ Food(
     receipt.writeln();
     receipt.writeln("Total Items: ${getTotalItemCount()}");
     receipt.writeln("Total Price: ${_formatPrice(getTotalPrice())}");
+    receipt.writeln();
+    receipt.writeln("Delivery to: $deliveryAddress");
 
     return receipt.toString();
 
